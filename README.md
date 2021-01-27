@@ -5,22 +5,22 @@
 - FaceNet to Get Face Embadding
 - L2 norm to calculate diff
 - If App have no user data
-- ![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "nodata")
+- ![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/nodatapng.png "nodata")
 - FingerPrint to Get into Another Activity ( UserAdding )
 - User Data Editing Activity
-- - ![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "useradding")
+- - ![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/useradding.png "useradding")
 - If the Application Recognizes the User Less Than 21 Times 
 - - Live Data Observer
-- ![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "noentry")
+- ![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/found6.png "noentry")
 - After recognizing 21 times
-- ![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "entry")
+- ![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/withauth.png "entry")
 
 ## Auth
 - Registrate by Email/Pass
 - Log bn Email/Pass
 - Reset Password
 - All data store in FireBase
-![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "Auth")
+![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/auth.png "Auth")
 
 ## Ciphering
 - Aes All File Types Encrypting/Dectypting
@@ -29,13 +29,13 @@
 - Coroutines To Encrypt
 - Each File has Its Own Encryption key
 - Vault with ciphered file 
-![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "vault")
+![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/encrypted.png "vault")
 - Storing encrypted data in Firebase
-![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "firebase")
+![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/firebase.png "firebase")
 
 ## File Manager 
 - Display Many File Type Icons By Glide
-- ![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "dialog")
+- ![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/manager.png "manager")
 - Navigation Buttons Have They Own Animation
 - Diff Utils 
 - Each File Type Have They Own BottomSheet Dialog
@@ -44,7 +44,7 @@
 - - Ability to Delete files
 - - Ability to Delete Folders
 - - Ability to Copy files
-![Alt text](https://github.com/kremlev404/Video_editor_2.0/blob/master/1.png "dialog")
+![Alt text](https://github.com/kremlev404/MlKit/blob/main/ReadMeData/bottomsheetpng.png"dialog")
 
 
 ##### Icons
