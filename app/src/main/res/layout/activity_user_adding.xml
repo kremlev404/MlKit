@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".recognition.activity.UserAdding">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/userAdding_viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" >
+    </androidx.camera.view.PreviewView>
+
+    <com.kremlev.mlkit.recognition.overlay.UserAddDraw
+        android:id="@+id/userDrawAdding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="26dp"
+        android:contextClickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_add_username"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:hint="ENTER USERNAME"
+        android:textColorHint="@color/white"
+        android:background="@color/purple_700"
+        android:gravity="top|center_horizontal"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/make_photo_button"
+        android:layout_width="92dp"
+        android:layout_height="52dp"
+        android:background="#00000000"
+        android:drawableTop="@drawable/ic_make_photo"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/remove_user_button"
+        android:layout_width="92dp"
+        android:layout_height="52dp"
+        android:background="#00000000"
+        android:drawableTop="@drawable/ic_delete_user"
+        android:gravity="bottom|center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/make_photo_button"
+        app:layout_constraintStart_toEndOf="@+id/cancel_button" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="92dp"
+        android:layout_height="52dp"
+        android:background="#00000000"
+        android:drawableTop="@drawable/ic_back_arrow"
+        android:gravity="bottom|left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

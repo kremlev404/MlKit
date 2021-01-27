@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".safe.fragments.SafeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_file_safe"
+            android:orientation="vertical"
+            android:layout_marginBottom="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            />
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/horizontal_progressbar"
+            style="@style/SpinKitView.Large.Wave"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/red_tradic"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "555230249481",
+    "project_id": "mlkit-c5292",
+    "firebase_url": "https://mlkit-c5292-default-rtdb.europe-west1.firebasedatabase.app",
+    "storage_bucket": "mlkit-c5292.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555230249481:android:ee3ebba895eeba80192ed8",
+        "android_client_info": {
+          "package_name": "com.kremlev.mlkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555230249481-3itn6lpquotqgp2narjlo6f3lpt8uaac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALIIo3GJTfke1dgVZlZaZ7OXH8UV0H9GY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555230249481-3itn6lpquotqgp2narjlo6f3lpt8uaac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

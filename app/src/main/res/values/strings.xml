@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MlKit</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rotation_description">The angle of the photos depends on the brand of the phone, if you added data and your face was not detected, try changing the angle</string>
+</resources>

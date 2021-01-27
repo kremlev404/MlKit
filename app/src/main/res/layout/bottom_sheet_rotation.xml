@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:autoSizeTextType="uniform"
+            android:text="Select the rotation angle of images"
+            android:textAlignment="center"
+            android:textColor="@color/red_tradic"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/rotation_0"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rotation" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Rotation 0"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rotation_90"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rotation" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Rotation 90"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rotation_180"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rotation" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Rotation 180"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rotation_270"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rotation" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Rotation 270"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_information"></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="20dp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/rotation_description"
+
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

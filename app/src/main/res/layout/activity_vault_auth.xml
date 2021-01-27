@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_margin="96dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/vault_login_et"
+        android:src="@drawable/ic_vault"
+        tools:ignore="NotSibling"
+        android:adjustViewBounds="true">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <RelativeLayout
+            android:id="@+id/login_et_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/login_btn_layout">
+
+            <ImageView
+                android:id="@+id/login_et_layout_ic_login"
+                android:layout_marginLeft="8dp"
+                android:layout_width="26dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_email"
+                />
+
+            <EditText
+                android:layout_toRightOf="@+id/login_et_layout_ic_login"
+                android:inputType="textEmailAddress"
+                android:backgroundTint="@color/purple_500"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="Email"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:id="@+id/vault_login_et">
+            </EditText>
+
+            <ImageView
+                android:id="@+id/pass_et_layout_ic_login"
+                android:layout_below="@+id/login_et_layout_ic_login"
+                android:layout_marginLeft="8dp"
+                android:layout_width="26dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_password"
+                />
+
+            <EditText
+                android:layout_toRightOf="@+id/pass_et_layout_ic_login"
+                android:hint="Password"
+                android:layout_marginRight="8dp"
+                android:inputType="textPassword"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/vault_login_et"
+                android:backgroundTint="@color/purple_500"
+
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:id="@+id/vault_pass_et">
+
+            </EditText>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/login_btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/forget_btn"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+
+            >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="@color/purple_500"
+                android:textColor="@color/white"
+                android:text="SING IN"
+                android:id="@+id/auth_btn">
+
+            </Button>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_below="@id/auth_btn"
+                android:textColor="@color/white"
+                android:background="@drawable/background_stroke"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="SING UP"
+                android:gravity="center"
+                android:id="@+id/reg_btn"
+                android:layout_marginBottom="8dp"
+                >
+
+            </TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/forget_btn"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:backgroundTintMode="src_atop">
+
+            <TextView
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:id="@+id/forget_btn_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Reset password"
+                android:autoSizeTextType="uniform"
+                android:textColor="@color/red_tradic"
+                >
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

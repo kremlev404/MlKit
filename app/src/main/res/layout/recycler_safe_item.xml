@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="128dp"
+        android:layout_height="192dp"
+        android:backgroundTintMode="screen"
+        android:id="@+id/card_safe_view"
+        android:clickable="true"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="12dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/fileSafeIconView"
+                android:layout_width="match_parent"
+                android:layout_height="132dp"
+                android:src="@drawable/ic_encryptedfile"
+                android:adjustViewBounds="true"
+                android:layout_margin="8dp"/>
+
+            <TextView
+                android:id="@+id/fileSafeName_tv"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:text="Name"
+                android:autoSizeTextType="uniform"
+
+                android:textStyle="italic"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/oldfileSafeName_tv"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:text="oldFileName"
+                android:autoSizeTextType="uniform"
+                android:textStyle="bold"
+                android:textColor="@color/red_tradic"
+                android:gravity="center"
+                />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+

@@ -1,0 +1,40 @@
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viedeoDialog"
+    >
+
+        <VideoView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@color/purple_700"
+            android:id="@+id/videoViewViewFull">
+        </VideoView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="Press Play: "
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/purple_500"
+            android:textSize="18sp"
+            android:id="@+id/hint_for_play_tv"
+            android:visibility="visible"
+            android:layout_alignBottom="@id/btn_video_pp"
+            />
+
+        <Button
+            android:id="@+id/btn_video_pp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#00000000"
+            android:drawableTop="@drawable/ic_video_play"
+            android:layout_alignBottom="@id/videoViewViewFull"
+            />
+
+    </RelativeLayout>
+</FrameLayout>

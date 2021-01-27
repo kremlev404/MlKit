@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".recognition.fragments.SettingFragment"
+    android:background="@drawable/splashscreen">
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/select_rotation"
+        android:orientation="vertical"
+        android:layout_above="@id/new_user"
+        >
+
+        <ImageView
+            android:id="@+id/rotation_ic"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rotate" />
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/rotation_ic"
+            android:textAlignment="center"
+            android:textColor="@color/purple_500"
+            android:autoSizeTextType="uniform"
+            android:text="ROTATION">
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="72dp"
+        android:layout_alignParentBottom="true">
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/new_user"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageView
+            android:id="@+id/add_user_data_iv"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_user_data" />
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/add_user_data_iv"
+            android:textAlignment="center"
+            android:textColor="@color/purple_500"
+            android:autoSizeTextType="uniform"
+            android:text="ADD USER">
+        </TextView>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kremlev.mlkit.safe.fragments.SafeSettingFragment"
+    android:background="@drawable/splashscreen"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp">
+        <ImageView
+            android:id="@+id/firebase_username_tv_tint"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/ic_id_card"
+            android:layout_marginLeft="16dp"
+            >
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_height="42dp"
+            android:textColor="@color/red_tradic"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/firebase_username_tv_tint"
+            android:textAlignment="center"
+            android:autoSizeTextType="uniform"
+            android:id="@+id/firebase_username_tv">
+        </TextView>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:id="@+id/return_to_recognize"
+        android:orientation="vertical"
+
+        android:layout_above="@id/logout_view"
+        >
+        <ImageView
+            android:id="@+id/return_to_recognize_iv"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_facial_recognition" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/return_to_recognize_iv"
+            android:textAlignment="center"
+            android:textColor="@color/purple_500"
+            android:autoSizeTextType="uniform"
+            android:text="RETURN">
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:id="@+id/logout_view"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        >
+        <ImageView
+            android:id="@+id/logout_iv"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_log_out" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/logout_iv"
+            android:textAlignment="center"
+            android:textColor="@color/purple_500"
+            android:autoSizeTextType="uniform"
+            android:text="LOGOUT">
+        </TextView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
