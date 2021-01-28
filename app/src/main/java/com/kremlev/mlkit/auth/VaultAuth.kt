@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_user_adding.*
 import kotlinx.android.synthetic.main.activity_vault_auth.*
 import kotlinx.android.synthetic.main.dialog_reset_password.*
 
-
 class VaultAuth : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +22,6 @@ class VaultAuth : AppCompatActivity() {
         Log.e("Life", "Vault onCreate")
 
         buttonClicks()
-
     }
 
     private fun buttonClicks() {
@@ -39,7 +37,6 @@ class VaultAuth : AppCompatActivity() {
     }
 
     private fun resetPass() {
-
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.dialog_reset_password, null)
         val builder = AlertDialog
@@ -51,6 +48,7 @@ class VaultAuth : AppCompatActivity() {
 
         mAlertDialog.dialog_reset_password_btn_reset.setOnClickListener {
             val mail = dialog_add_editText.text.toString()
+
             if (mail.isNotEmpty()) {
                 FirebaseAuth.getInstance().sendPasswordResetEmail(mail).addOnCompleteListener { taskReset ->
                     if (taskReset.isSuccessful) {
@@ -59,6 +57,7 @@ class VaultAuth : AppCompatActivity() {
                                 "Mail sent to $mail",
                                 Toast.LENGTH_SHORT
                         ).show()
+
                     } else {
                         Toast.makeText(
                                 this@VaultAuth,
@@ -67,6 +66,7 @@ class VaultAuth : AppCompatActivity() {
                         ).show()
                     }
                 }
+
                 mAlertDialog.dismiss()
             } else {
                 Toast.makeText(
@@ -98,11 +98,13 @@ class VaultAuth : AppCompatActivity() {
                             "Successful SingUp",
                             Toast.LENGTH_SHORT
                     ).show()
+
                     val safeIntent = Intent(this@VaultAuth, SafeMainActivity::class.java)
                     safeIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     safeIntent.putExtra("user_id", firebaseUser.uid)
                     startActivity(safeIntent)
                     finish()
+
                 } else {
                     Toast.makeText(
                             this@VaultAuth,
@@ -163,7 +165,7 @@ class VaultAuth : AppCompatActivity() {
     }
 
     private fun ifUserIsLoggedIn() {
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        FirebaseAuth.getInstance().currentUser?.let  {
             val safeIntent = Intent(this@VaultAuth, SafeMainActivity::class.java)
             startActivity(safeIntent)
             finish()

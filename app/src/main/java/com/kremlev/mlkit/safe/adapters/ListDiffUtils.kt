@@ -3,8 +3,10 @@ package com.kremlev.mlkit.safe.adapters
 import androidx.recyclerview.widget.DiffUtil
 import com.kremlev.mlkit.safe.data.dataFile
 
-class ListDiffUtils(val oldList: MutableList<dataFile>,
-                    val newList: MutableList<dataFile>) : DiffUtil.Callback() {
+class ListDiffUtils(
+        val oldList: MutableList<dataFile>,
+        val newList: MutableList<dataFile>
+) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }

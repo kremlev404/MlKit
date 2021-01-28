@@ -6,8 +6,10 @@ import android.util.AttributeSet
 import android.view.View
 import com.kremlev.mlkit.recognition.Analyzer.data.PersonDataClass
 
-class FaceDraw(context: Context, attributeSet: AttributeSet)
-    : View(context, attributeSet) {
+class FaceDraw(
+        context: Context,
+        attributeSet: AttributeSet
+) : View(context, attributeSet) {
 
     //A structure describing general information about a display,
     //Such as its size, density, and font scaling.
@@ -75,7 +77,7 @@ class FaceDraw(context: Context, attributeSet: AttributeSet)
     override fun onDraw(canvas: Canvas?) {
         var ms = (timeToProcess.toInt())
 
-        if ((personData.isNotEmpty() || personData !== null) && newUserFrameBoxes) {
+        if (personData.isNotEmpty() && newUserFrameBoxes) {
             canvas?.drawText(
                     "NET SPENDS ON CALCULATIONS:$ms ms",
                     0f,

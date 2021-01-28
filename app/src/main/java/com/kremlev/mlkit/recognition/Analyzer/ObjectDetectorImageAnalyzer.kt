@@ -21,7 +21,10 @@ import com.kremlev.mlkit.recognition.Analyzer.NET.Normalize
 import com.kremlev.mlkit.recognition.Analyzer.data.PersonDataClass
 import com.kremlev.mlkit.recognition.Analyzer.data.UserDescriptor
 import com.kremlev.mlkit.recognition.overlay.FaceDraw
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.internal.synchronized
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.concurrent.thread
 
 class ObjectDetectorImageAnalyzer(
         private val context: Context,
@@ -31,8 +34,6 @@ class ObjectDetectorImageAnalyzer(
         private val detectorImageWidth: Float,
         private val detectorImageHeight: Float
 ) : ImageAnalysis.Analyzer {
-
-    private var isProcessing = AtomicBoolean(false)
 
     //Net
     private val model = FaceNetModel(context)
@@ -47,14 +48,13 @@ class ObjectDetectorImageAnalyzer(
     //user faces
     var faceList = ArrayList<UserDescriptor>()
 
-
     //draw a square if the user was not recognized
     private fun drawingForUnknownUser(box: RectF, t1: Long) {
         val t2: Long = System.currentTimeMillis()
         faceDrawOverlay.drawFaceBoundsWithoutData((box), t2 - t1, true)
     }
 
-
+    //to draw on overlay correct data we have to scale point
     fun processLandmarks(arr: ArrayList<FloatArray>, bitmapHeight: Int,
                          bitmapWidth: Int): ArrayList<FloatArray> {
         val scaleFactorX = detectorImageHeight / bitmapHeight
@@ -70,28 +70,7 @@ class ObjectDetectorImageAnalyzer(
         return arr
     }
 
-    //TODO align
-    /*
-    fun alignFaces(srcTri: ArrayList<DoubleArray>, src: ImageProxy){
-        val warpMat = Imgproc.getAffineTransform(
-                MatOfPoint2f(
-                        Point(srcTri[0]),
-                        Point(srcTri[1]),
-                        Point(srcTri[2]),
-                        Point(srcTri[3]),
-                        Point(srcTri[4]),
-                ), MatOfPoint2f(
-                Point(0.31556875000000000, 0.4615741071428571),
-                Point(0.68262291666666670, 0.4615741071428571),
-                Point(0.50026249999999990, 0.6405053571428571),
-                Point(0.34947187500000004, 0.8246919642857142),
-                Point(0.65343645833333330, 0.8246919642857142)
-        )
-        )
-
-    }
-     */
-
+    //to draw on overlay correct data we have to scale point
     private fun processBoxes(box: Rect, bitmapHeight: Int,
                              bitmapWidth: Int): RectF {
         val rectf = RectF(box)
@@ -107,17 +86,15 @@ class ObjectDetectorImageAnalyzer(
         return rectf
     }
 
-    @SuppressLint("UnsafeExperimentalUsageError")
+    private var isProcessing = AtomicBoolean(false)
+
     override fun analyze(imageProxy: ImageProxy) {
         //get bitmap from camera to analyze
-        val bitmap = normalize.toBitmap(imageProxy?.image!!)
+        val bitmap = normalize.toBitmap(imageProxy.image!!)
 
-        // wait while other frame is being processed
         if (isProcessing.get()) {
             return
         } else {
-
-            // set that the current frame is being processed
             isProcessing.set(true)
 
             // create inputImage to put it on detector
@@ -133,119 +110,120 @@ class ObjectDetectorImageAnalyzer(
             detector.process(inputImage)
                     .addOnSuccessListener { faces ->
                         //set timer to show info about proccesing time in overlay
-                        val t1 = System.currentTimeMillis()
                         Thread {
-                            if (faces.isNotEmpty() && faces != null) {
-                                for (face in faces) {
-                                    try {
-                                        //if we dont have any user data, we dont need to calculate
-                                        val bitmapHeight = bitmap.height
-                                        val bitmapWidth = bitmap.width
-                                        if (isNeedToRunModel) {
-                                            //anther timer
-                                            val t3 = System.currentTimeMillis()
+                            val t1 = System.currentTimeMillis()
 
-                                            //get faceEmbadding
-                                            val currentFace =
-                                                    model.getFaceEmbedding(bitmap, face.boundingBox, preRotate = false)
+                            faces?.let { faces ->
+                                if (faces.isNotEmpty()) {
+                                    for (face in faces) {
+                                        try {
+                                            //if we dont have any user data, we dont need to calculate
+                                            val bitmapHeight = bitmap.height
+                                            val bitmapWidth = bitmap.width
+                                            if (isNeedToRunModel) {
+                                                //anther timer
+                                                val t3 = System.currentTimeMillis()
 
-                                            val userNormHashMap = HashMap<String, ArrayList<Float>>()
+                                                //get faceEmbadding
+                                                val currentFace =
+                                                        model.getFaceEmbedding(bitmap, face.boundingBox, preRotate = false)
 
-                                            for (i in 0 until faceList.size) {
+                                                val userNormHashMap = HashMap<String, ArrayList<Float>>()
 
-
-                                                if (userNormHashMap[faceList[i].name] == null) {
-
+                                                faceList.forEach { flist ->
                                                     // Compute the L2 norm and then append it to the ArrayList.
-                                                    val l2norm = ArrayList<Float>()
-                                                    l2norm.add(normalize.L2Norm(currentFace, faceList[i].faceEmbading))
-                                                    userNormHashMap[faceList[i].name] = l2norm
-                                                    Log.e("userNormHashMap" , " $userNormHashMap")
-                                                    //fill user
-                                                } else {
-                                                    userNormHashMap[faceList[i].name]?.add(
-                                                            normalize.L2Norm(
-                                                                    currentFace,
-                                                                    faceList[i].faceEmbading
-                                                            )
-                                                    )
-                                                    Log.e("userNormHashMapA" , " $userNormHashMap")
+                                                    userNormHashMap[flist.name]?.let { descriptor ->
+                                                        descriptor.add(
+                                                                normalize.L2Norm(
+                                                                        currentFace,
+                                                                        flist.faceEmbading
+                                                                )
+                                                        )
+                                                        Log.e("userNormHashMap", " $userNormHashMap")
+
+                                                    } ?: run {
+                                                        val l2norm = ArrayList<Float>()
+                                                        l2norm.add(normalize.L2Norm(currentFace, flist.faceEmbading))
+                                                        userNormHashMap[flist.name] = l2norm
+
+                                                        Log.e("userNormHashMapA", " $userNormHashMap")
+                                                    }
                                                 }
-                                            }
 
-                                            // If landmark detection was enabled (mouth, eyes, and
-                                            // nose available):
-                                            val leftEye = face.getLandmark(FaceLandmark.LEFT_EYE).position
-                                            val rightEye = face.getLandmark(FaceLandmark.RIGHT_EYE).position
-                                            val leftMouth = face.getLandmark(FaceLandmark.MOUTH_LEFT).position
-                                            val rightMouth = face.getLandmark(FaceLandmark.MOUTH_RIGHT).position
-                                            val nose = face.getLandmark(FaceLandmark.NOSE_BASE).position
+                                                // If landmark detection was enabled (mouth, eyes, and
+                                                // nose available):
+                                                val leftEye = face.getLandmark(FaceLandmark.LEFT_EYE).position
+                                                val rightEye = face.getLandmark(FaceLandmark.RIGHT_EYE).position
+                                                val leftMouth = face.getLandmark(FaceLandmark.MOUTH_LEFT).position
+                                                val rightMouth = face.getLandmark(FaceLandmark.MOUTH_RIGHT).position
+                                                val nose = face.getLandmark(FaceLandmark.NOSE_BASE).position
 
-                                            //var landmarkData = LandmarkData(leftEye, rightEye, nose, leftMouth, rightMouth)
+                                                //var landmarkData = LandmarkData(leftEye, rightEye, nose, leftMouth, rightMouth)
 
-                                            var arr = ArrayList<FloatArray>()
+                                                var arr = ArrayList<FloatArray>()
 
-                                            arr.add(floatArrayOf(leftEye.x, leftEye.y))
-                                            arr.add(floatArrayOf(rightEye.x, rightEye.y))
-                                            arr.add(floatArrayOf(nose.x, nose.y))
-                                            arr.add(floatArrayOf(leftMouth.x, leftMouth.y))
-                                            arr.add(floatArrayOf(rightMouth.x, rightMouth.y))
+                                                arr.add(floatArrayOf(leftEye.x, leftEye.y))
+                                                arr.add(floatArrayOf(rightEye.x, rightEye.y))
+                                                arr.add(floatArrayOf(nose.x, nose.y))
+                                                arr.add(floatArrayOf(leftMouth.x, leftMouth.y))
+                                                arr.add(floatArrayOf(rightMouth.x, rightMouth.y))
 
-                                            val processedLand = processLandmarks(arr, bitmapHeight, bitmapWidth)
+                                                val processedLand = processLandmarks(arr, bitmapHeight, bitmapWidth)
 
-                                            // Compute the average of all Euclidean Distance norms for each face.
-                                            val avgNorms = userNormHashMap.values.map { L2norms ->
-                                                L2norms.toFloatArray().average()
-                                            }
+                                                // Compute the average of all Euclidean Distance norms for each face.
+                                                val avgNorms = userNormHashMap.values.map { L2norms ->
+                                                    L2norms.average()
+                                                }
 
-                                            if (avgNorms.isNotEmpty() || avgNorms !== null) {
-                                                val names = userNormHashMap.keys.map { key -> key }
+                                                if (avgNorms.isNotEmpty()) {
+                                                    val names = userNormHashMap.keys.map { key -> key }
 
-                                                val minL2value = avgNorms.min()!!
-                                                val minL2index = avgNorms.indexOf(minL2value)
-                                                val minL2NormName = names[minL2index]
+                                                    val minL2value = avgNorms.min()!!
+                                                    val minL2index = avgNorms.indexOf(minL2value)
+                                                    val minL2NormName = names[minL2index]
 
-                                                faceDrawOverlay.currentNorm = minL2value
+                                                    faceDrawOverlay.currentNorm = minL2value
 
-                                                if (avgNorms.min()!! < threshold && avgNorms.min()!! > -1 * threshold) {
-                                                    AccessValue.setAccess()
+                                                    if (avgNorms.min()!! < threshold && avgNorms.min()!! > -1 * threshold) {
+                                                        AccessValue.setAccess()
 
-                                                    predictions.add(
-                                                            PersonDataClass(
-                                                                    processBoxes(face.boundingBox, bitmapHeight, bitmapWidth),
-                                                                    //face.boundingBox.transform(width, height),
-                                                                    minL2NormName
-                                                            )
-                                                    )
+                                                        predictions.add(
+                                                                PersonDataClass(
+                                                                        processBoxes(face.boundingBox, bitmapHeight, bitmapWidth),
+                                                                        //face.boundingBox.transform(width, height),
+                                                                        minL2NormName
+                                                                )
+                                                        )
 
-                                                    faceDrawOverlay.drawFaceBounds(
-                                                            predictions,
-                                                            processedLand,
-                                                            model.timeToProcess,
-                                                            newUserFrameBoxes = true,
-                                                            haveToDrawLandMarks = true
-                                                    )
+                                                        faceDrawOverlay.drawFaceBounds(
+                                                                predictions,
+                                                                processedLand,
+                                                                model.timeToProcess,
+                                                                newUserFrameBoxes = true,
+                                                                haveToDrawLandMarks = true
+                                                        )
 
-                                                    //draw text & box for unknown user
-                                                } else {
-                                                    faceDrawOverlay.someUserData = true
+                                                        //draw text & box for unknown user
+                                                    } else {
+                                                        faceDrawOverlay.someUserData = true
+                                                        drawingForUnknownUser(processBoxes(face.boundingBox, bitmapHeight, bitmapWidth), t3)
+                                                    }
+                                                } else
                                                     drawingForUnknownUser(processBoxes(face.boundingBox, bitmapHeight, bitmapWidth), t3)
-                                                }
                                             } else
-                                                drawingForUnknownUser(processBoxes(face.boundingBox, bitmapHeight, bitmapWidth), t3)
-                                        } else
-                                            drawingForUnknownUser(processBoxes(face.boundingBox, bitmapHeight, bitmapWidth), t1)
+                                                drawingForUnknownUser(processBoxes(face.boundingBox, bitmapHeight, bitmapWidth), t1)
 
-                                    } catch (e: Exception) {
-                                        Log.e("MODEL ANALYZER", "${e.printStackTrace()} ")
-                                        continue
+                                        } catch (e: Exception) {
+                                            Log.e("MODEL ANALYZER", "${e.printStackTrace()} ")
+                                            continue
+                                        }
                                     }
+                                } else {
+                                    faceDrawOverlay.drawNoFace(noface = true)
                                 }
-                            } else {
-                                faceDrawOverlay.drawNoFace(noface = true)
+
+                                isProcessing.set(false)
                             }
-                            //
-                            isProcessing.set(false)
                             imageProxy.close()
                         }.start()
                     }
@@ -253,5 +231,6 @@ class ObjectDetectorImageAnalyzer(
                         e.message?.let { Log.e("Model", it) }
                     }
         }
+
     }
 }

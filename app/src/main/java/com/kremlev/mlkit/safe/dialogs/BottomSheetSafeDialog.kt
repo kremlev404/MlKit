@@ -71,7 +71,7 @@ class BottomSheetSafeDialog() : BottomSheetDialogFragment() {
 
             bottom_sheet_view.bottom_encrypt.setOnClickListener {
                 var viewModelJob = Job()
-                val myScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+                val myScope = CoroutineScope(Dispatchers.Default + viewModelJob)
 
                 myScope.launch {
                     withContext(Dispatchers.Main) {

@@ -28,11 +28,14 @@ class SafeMainActivity : AppCompatActivity() {
 
     private fun setUpTabs() {
         val adapter = ViewPageAdapter(supportFragmentManager)
+
         adapter.addFragment(SafeHomeFragment(), "EXPLORER")
         adapter.addFragment(SafeFragment(), "VAULT")
         adapter.addFragment(SafeSettingFragment(), "SETTING")
+
         safeViewPager.adapter = adapter
         safe_tabs.setupWithViewPager(safeViewPager)
+
         safe_tabs.getTabAt(0)!!.setIcon(R.drawable.ic_folder_icon)
         safe_tabs.getTabAt(1)!!.setIcon(R.drawable.ic_on_security)
         safe_tabs.getTabAt(2)!!.setIcon(R.drawable.ic_safe_settings)

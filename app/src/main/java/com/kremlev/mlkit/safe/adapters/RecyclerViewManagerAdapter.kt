@@ -127,10 +127,12 @@ class RecyclerViewManagerAdapter(
                     .override(size, size)
                     .into(holder.File_preview_view)
             try {
+                //to Open pressed folder
                 holder.itemView.setOnClickListener { v: View ->
                     current.path = files.FilePath
                     current.refresh()
                 }
+                //to view BottomDialog
                 holder.itemView.setOnLongClickListener { v: View ->
                     current.position = holder.adapterPosition
                     val bottomSheetDialog = BottomSheetFolderDialog()

@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerSafeUpdate(val context: Context,
-                         var recycler: RecyclerView) {
+class RecyclerSafeUpdate(
+        val context: Context,
+        var recycler: RecyclerView
+) {
     private var adapter: RecyclerView.Adapter<RecyclerViewSafeAdapter.ViewSafeHolder>? = null
 
     fun refreshList() {

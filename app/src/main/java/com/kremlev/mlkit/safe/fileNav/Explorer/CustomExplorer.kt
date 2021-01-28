@@ -16,13 +16,13 @@ class CustomExplorer {
         //current.position = 0
         val filesArray = File(current.path).listFiles()
         var fileName: String
-        if (filesArray !== null) {
-            for (f in filesArray) {
-                fileName = f.toString().substringAfterLast("/")
-                current.fileList.add(dataFile(fileName, "$f"))
-            }
-            current.fileList.sortedWith(compareBy { it.FileName })
+
+        filesArray?.forEach { f->
+            fileName = f.toString().substringAfterLast("/")
+            current.fileList.add(dataFile(fileName, "$f"))
         }
+        //current.fileList.sortedWith(compareBy { it.FileName })
+
         if (current.path == rootPath)
             scanSafeFolder()
     }
@@ -34,7 +34,7 @@ class CustomExplorer {
         current.fileList.clear()
         var fileName: String
 
-        if (filesArray !== null) {
+        filesArray?.let {
             for (f in filesArray) {
                 fileName = f.toString().substringAfterLast("/")
                 current.fileList.add(dataFile(fileName, "$f"))
@@ -47,11 +47,10 @@ class CustomExplorer {
         val filesArray = File(current.path).listFiles()
         current.fileList.clear()
         var fileName: String
-        if (filesArray !== null && filesArray.isNotEmpty()) {
-            for (f in filesArray) {
+
+        filesArray?.forEach { f->
                 fileName = f.toString().substringAfterLast("/")
                 current.fileList.add(dataFile(fileName, "$f"))
-            }
         }
     }
 
@@ -60,11 +59,9 @@ class CustomExplorer {
             SafeState.fileList.clear()
             val filesArray = File(rootPath).listFiles()
             var fileName: String
-            if (filesArray !== null) {
-                for (f in filesArray) {
+            filesArray?.forEach { f->
                     fileName = f.toString().substringAfterLast("/")
                     SafeState.fileList.add(dataFile(fileName, "$f"))
-                }
             }
         } else {
             File(rootPath).mkdirs()

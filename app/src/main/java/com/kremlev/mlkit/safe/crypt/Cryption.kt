@@ -7,10 +7,7 @@ import com.google.firebase.database.*
 import com.kremlev.mlkit.safe.data.dataCrypt
 import com.kremlev.mlkit.safe.fileNav.SafeState
 import com.kremlev.mlkit.safe.fileNav.current
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -22,7 +19,9 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
 
-class Cryption(val path: String) {
+class Cryption(
+        val path: String
+) {
 
     //out flag to check file is not empty
     var CRYPT_ERROR = false
@@ -131,8 +130,12 @@ class Cryption(val path: String) {
                     for (ds: DataSnapshot in dataSnapshot.children) {
                         receivedData = (ds.getValue(dataCrypt::class.java)!!)
                     }
+
                     if (receivedData.key.isNotEmpty()) {
-                        GlobalScope.launch {
+                        val job = SupervisorJob()
+                        val scope = CoroutineScope(Dispatchers.Default + job)
+
+                        scope.launch {
                             withContext(Dispatchers.Main) {
                                 //set loading gui
                                 SafeState.isProcessing = true
@@ -178,6 +181,7 @@ class Cryption(val path: String) {
             //init cipher
             val cipher = Cipher.getInstance("AES")
             cipher.init(Cipher.DECRYPT_MODE, stringToKey(receivedData.key))
+
             try {
 
                 //stream to read

@@ -25,8 +25,7 @@ import com.kremlev.mlkit.safe.adapters.RecyclerViewManagerAdapter
 import com.kremlev.mlkit.safe.fileNav.current
 import com.kremlev.mlkit.safe.fileNav.Explorer.CustomExplorer
 import kotlinx.android.synthetic.main.fragment_safe_home.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 import java.lang.Exception
 
@@ -114,7 +113,10 @@ class SafeHomeFragment : Fragment() {
             //root folder check
             if (current.path == Environment.getExternalStorageDirectory()!!.absolutePath) {
                 try {
-                    GlobalScope.launch {
+                                               // (1)
+                    val scope = CoroutineScope(Dispatchers.Default )
+
+                    scope.launch {
                         vibratePhone()
                     }
                 } catch (e: Exception) {

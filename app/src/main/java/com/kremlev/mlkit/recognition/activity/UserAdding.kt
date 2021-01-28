@@ -115,14 +115,15 @@ class UserAdding : AppCompatActivity() {
         val listAllFiles = imagesDir.listFiles()
         Log.e("FILES ", "${imagesDir} ")
         Log.e("FILES ", "${listAllFiles}")
-        if (listAllFiles != null && listAllFiles.size > 0)
-            for (currentFile in listAllFiles)
+        if (listAllFiles?.isNotEmpty() == true){
+            listAllFiles?.forEach { currentFile ->
                 if (currentFile.name.endsWith(".png")) {
                     num_of_user_photos++
                     Log.e("FILES ", "num_of_user_photos ${num_of_user_photos}")
                     Log.e("FILES", "currentFile.getName()" + currentFile.getName())
                 }
-
+            }
+        }
         this.photo_index = num_of_user_photos
     }
 
@@ -134,12 +135,15 @@ class UserAdding : AppCompatActivity() {
 
         val listAllFiles = imagesDir.listFiles()
 
-        if (listAllFiles != null && listAllFiles.size > 0)
-            for (currentFile in listAllFiles)
-                for (currentFileI in currentFile.listFiles())
+        if (listAllFiles?.isNotEmpty() == true) {
+            listAllFiles?.forEach { currentFile ->
+                currentFile.listFiles()?.forEach { currentFileI ->
                     if (currentFileI.name.endsWith(".png")) {
                         num_of_user_photos++
                     }
+                }
+            }
+        }
 
         return num_of_user_photos
     }
@@ -151,7 +155,7 @@ class UserAdding : AppCompatActivity() {
                         + "/.MLSafe/.NetPhotos/$username/"
         )
 
-        if (!username.isEmpty()) {
+        if (username.isNotEmpty()) {
             if (imagesDir.isDirectory) {
                 Toast.makeText(
                         this, "DELETING $username COMPLETED SUCCESSFULLY",
@@ -172,7 +176,9 @@ class UserAdding : AppCompatActivity() {
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                 }
+                preferences.edit().remove("UserData").apply()
             }
+
 
         } else {
             Toast.makeText(

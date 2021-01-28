@@ -53,10 +53,10 @@ class BottomSheetFileSafeDialog : BottomSheetDialogFragment() {
             }
 
             bottom_sheet_file_view.file_bottom_encrypt.setOnClickListener {
-                var viewModelJob = Job()
-                val myScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+                var job = SupervisorJob()
+                val scope = CoroutineScope(Dispatchers.Default + job)
 
-                myScope.launch {
+                scope.launch {
                     withContext(Dispatchers.Main) {
 
                         //set loading gui

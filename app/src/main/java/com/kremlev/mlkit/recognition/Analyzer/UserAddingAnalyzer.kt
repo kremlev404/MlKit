@@ -20,7 +20,7 @@ class UserAddingAnalyzer(
 
     @SuppressLint("UnsafeExperimentalUsageError")
     override fun analyze(imageProxy: ImageProxy) {
-        val bitmap = normalize.toBitmap(imageProxy?.image!!)
+        val bitmap = normalize.toBitmap(imageProxy.image!!)
         val rotation = imageProxy.imageInfo.rotationDegrees
         val inputImage = InputImage.fromByteArray(
                 normalize.bitmaptoNv21(bitmap),
@@ -29,22 +29,21 @@ class UserAddingAnalyzer(
                 rotation,
                 InputImage.IMAGE_FORMAT_NV21
         )
+
         detector.process(inputImage)
                 .addOnSuccessListener { faces ->
-                    Thread {
-                        for (face in faces) {
-                            try {
-                                userAddingOverlay.draw(face.boundingBox, userAddingFlag)
-                            } catch (e: Exception) {
-                                Log.e("Model", "Exception in FrameAnalyser : ${e.message}")
-                                continue
-                            }
+                    for (face in faces) {
+                        try {
+                            userAddingOverlay.draw(face.boundingBox, userAddingFlag)
+                        } catch (e: Exception) {
+                            Log.e("Model", "Exception in FrameAnalyser : ${e.message}")
+                            continue
                         }
-                        if (faces.isEmpty()) {
-                            userAddingOverlay.draw(Rect(0, 0, 1, 1), false)
-                        }
-                        imageProxy.close()
-                    }.start()
+                    }
+                    if (faces.isEmpty())
+                        userAddingOverlay.draw(Rect(0, 0, 1, 1), false)
+
+                    imageProxy.close()
                 }
                 .addOnFailureListener { e ->
                     e.printStackTrace()

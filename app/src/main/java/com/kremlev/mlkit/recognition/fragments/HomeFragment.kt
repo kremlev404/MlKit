@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
     ): View? {
         Log.e("Life", "HOME FRAGMENT onCreateView")
 
@@ -176,77 +176,61 @@ class HomeFragment : Fragment() {
 
         val jsonString = preferences.getString("UserData", null)
         //val obj  = jsonArray
-        return if (jsonString != null)
+        return jsonString.let {
             Gson().fromJson(jsonString, object : TypeToken<ArrayList<UserDescriptor>>() {}.type)
-        else
-            arrayListOf()
+        } ?: arrayListOf()
     }
 
     private fun scanStorageForImages() {
         if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
 
-            //Dialog
-            progressDialog = ProgressDialog(requireActivity(), R.style.MyAlertDialogStyle)
-            progressDialog?.setMessage(" CALCULATING USER NORM ")
-            progressDialog?.setCancelable(false)
-            progressDialog?.show()
-
-            //net to check user photos
-            model = FaceNetModel(requireActivity())
-
             //dir
             val imagesDir = File(Environment.getExternalStorageDirectory()!!.absolutePath + "/.MLSafe/.NetPhotos")
             val imageSubDirs = imagesDir.listFiles()
 
             //if there are no user data
-            if (imageSubDirs == null || imageSubDirs.isEmpty()) {
-                isNeedToRunModel = false
-                progressDialog?.setMessage("Add new User on Setting")
-                Toast.makeText(requireActivity(), "No user Data, Add it on Settings",
-                        Toast.LENGTH_LONG).show()
-                progressDialog?.dismiss()
-                return
-            } else {
-                isNeedToRunModel = true
-                try {
-                    for (imageSubDir in imagesDir.listFiles()) {
-                        for (image in imageSubDir.listFiles()) {
-                            imageLabelPairs.add(
-                                    UserLabel(
-                                            BitmapFactory.decodeFile(image.absolutePath),
-                                            imageSubDir.name
-                                    )
-                            )
+            imageSubDirs?.let {
+                if (imageSubDirs.isNotEmpty()) {
+                    //Dialog
+                    progressDialog = ProgressDialog(requireActivity(), R.style.MyAlertDialogStyle)
+                    progressDialog?.setMessage(" CALCULATING USER NORM ")
+                    progressDialog?.setCancelable(false)
+                    progressDialog?.show()
+
+                    //net to check user photos
+                    model = FaceNetModel(requireActivity())
+
+                    isNeedToRunModel = true
+                    try {
+                        for (imageSubDir in imagesDir.listFiles()) {
+                            for (image in imageSubDir.listFiles()) {
+                                imageLabelPairs.add(
+                                        UserLabel(
+                                                BitmapFactory.decodeFile(image.absolutePath),
+                                                imageSubDir.name
+                                        )
+                                )
+                            }
                         }
+
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
                     }
 
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
+                    scanImage(0)
                 }
 
-                scanImage(0)
+            } ?: run {
+                isNeedToRunModel = false
+                Toast.makeText(
+                        requireActivity(),
+                        "No user Data, Add it on Settings",
+                        Toast.LENGTH_LONG
+                ).show()
+
             }
         }
-    }
-
-
-    private fun setRotation(): String {
-        var rotation: String = ""
-        val file = Environment.getExternalStorageDirectory()!!.absolutePath + "/.MLSafe/.Rotation.txt"
-
-        try {
-            val reader = BufferedReader(FileReader(file))
-            rotation = reader.readLine()
-            reader.close()
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-
-        return if (rotation.isNotEmpty())
-            rotation
-        else
-            "270"
     }
 
     private fun scanImage(counter: Int) {
@@ -262,7 +246,6 @@ class HomeFragment : Fragment() {
                 InputImage.IMAGE_FORMAT_NV21
         )
 
-        Log.e("JRotation,", "${setRotation().toInt()}")
         val faceList =
                 OnSuccessListener<List<Face?>> { faces ->
                     //for (face in faces) {
@@ -310,7 +293,7 @@ class HomeFragment : Fragment() {
 
     private fun createFaceDetector(
             width: Float,
-            height: Float
+            height: Float,
     ): ObjectDetectorImageAnalyzer {
         val faceDetector = ObjectDetectorImageAnalyzer(
                 requireContext(),
@@ -347,7 +330,8 @@ class HomeFragment : Fragment() {
 
                         viewFinder.previewStreamState.removeObserver(this)
                     }
-                })
+                }
+        )
     }
 
     private fun startCamera() {
@@ -381,16 +365,15 @@ class HomeFragment : Fragment() {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-
-    companion object {
-        private const val TAG = "HomeFragment"
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.e("Life", "HOME FRAGMENT onDestroyView")
         executor.shutdown()
         val manager = requireActivity().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
         Log.e("Life", "onDestroy")
+    }
+
+    companion object {
+        private const val TAG = "HomeFragment"
     }
 }
